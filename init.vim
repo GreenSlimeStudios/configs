@@ -29,6 +29,10 @@ Plug 'https://github.com/ryanoasis/vim-devicons'
 " Plug 'github.com/alan/vim-closetag'
 " Plug 'https://github.com/RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
 " Plug 'https://github.com/lukas-reineke/indent-blankline.nvim'
+Plug 'https://github.com/iamcco/coc-flutter'
+Plug 'https://github.com/dart-lang/dart-vim-plugin'
+Plug 'https://github.com/mefercs/flutter-snippets-for-neovim'
+Plug 'https://github.com/ap/vim-css-color'
 
 set encoding=UTF-8
 
@@ -38,7 +42,7 @@ nnoremap <C-f> :NERDTreeFocus<CR>
 " nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nmap <F8> :TagbarToggle<CR>
-nnoremap <C-c> :HexokinaseToggle<CR>
+nnoremap <C-c> :DartFmt<CR>
 
 :colorscheme molokai
 
@@ -57,6 +61,7 @@ let g:Hexokinase_optInPatterns = [
 \     'colour_names'
 \ ]
 
+let mapleader = ","
 
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
@@ -179,3 +184,28 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 " run prettier on save
 "let g:prettier#autoformat = 0
 "autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x  <Plug>(coc-convert-snippet)
+
+" format flutter code on save
+let g:dart_format_on_save = 1
+let g:dartfmt_options = ['--fix', '--line-length 100']
+
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
