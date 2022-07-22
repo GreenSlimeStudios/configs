@@ -7,7 +7,11 @@
 :set softtabstop=4
 :set mouse=a
 
-call plug#begin()
+call plug#begin("~/.config/nvim/plugged")
+" Plug 'https://github.com/junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
 " Plug 'https://github.com/nvim-treesitter/nvim-treesitter'
 Plug 'https://github.com/terryma/vim-multiple-cursors' " CTRL + N for multiple cursors
 Plug 'https://github.com/tpope/vim-commentary' " For Commenting gcc & gc
@@ -38,11 +42,16 @@ set encoding=UTF-8
 
 call plug#end()
 
+let mapleader = ","
+
 nnoremap <C-f> :NERDTreeFocus<CR>
 " nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nmap <F8> :TagbarToggle<CR>
 nnoremap <C-c> :DartFmt<CR>
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>g :Ag<CR>
+nnoremap <Leader>f :Files<CR>
 
 :colorscheme molokai
 
@@ -61,7 +70,6 @@ let g:Hexokinase_optInPatterns = [
 \     'colour_names'
 \ ]
 
-let mapleader = ","
 
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
@@ -209,3 +217,4 @@ let g:dartfmt_options = ['--fix', '--line-length 100']
 
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
+
