@@ -8,10 +8,11 @@
 :set mouse=a
 
 call plug#begin("~/.config/nvim/plugged")
+Plug 'windwp/nvim-autopairs'
 " Plug 'https://github.com/junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-
+Plug 'natebosch/dartlang-snippets'
 " Plug 'https://github.com/nvim-treesitter/nvim-treesitter'
 Plug 'https://github.com/terryma/vim-multiple-cursors' " CTRL + N for multiple cursors
 Plug 'https://github.com/tpope/vim-commentary' " For Commenting gcc & gc
@@ -28,6 +29,7 @@ Plug 'dense-analysis/ale'
 Plug 'https://github.com/airblade/vim-gitgutter'
 " Plug 'tmsvg/pear-tree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tpope/vim-fugitive'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'https://github.com/ryanoasis/vim-devicons'
 " Plug 'github.com/alan/vim-closetag'
@@ -37,6 +39,9 @@ Plug 'https://github.com/iamcco/coc-flutter'
 Plug 'https://github.com/dart-lang/dart-vim-plugin'
 Plug 'https://github.com/mefercs/flutter-snippets-for-neovim'
 Plug 'https://github.com/ap/vim-css-color'
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'hoob3rt/lualine.nvim'
+
 
 set encoding=UTF-8
 
@@ -121,7 +126,6 @@ endfunction
 " coc config
 let g:coc_global_extensions = [
   \ 'coc-snippets',
-  \ 'coc-pairs',
   \ 'coc-eslint', 
   \ 'coc-prettier', 
   \ 'coc-json', 
@@ -217,4 +221,12 @@ let g:dartfmt_options = ['--fix', '--line-length 100']
 
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+nnoremap <leader>fe :CocCommand flutter.emulators <CR>
+nnoremap <leader>fd :CocCommand flutter.devices<CR>
+nnoremap <leader>fr :CocCommand flutter.run <CR>
+nnoremap <leader>fR :CocCommand flutter.lsp.restart <CR>
+nnoremap <leader>fo :left new output:///flutter-dev <CR>
+nnoremap <leader>o :CocCommand workspace.showOutput <CR>
+
 
