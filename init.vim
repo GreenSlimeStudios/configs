@@ -225,8 +225,23 @@ nmap <leader>a  <Plug>(coc-codeaction-selected)
 nnoremap <leader>fe :CocCommand flutter.emulators <CR>
 nnoremap <leader>fd :CocCommand flutter.devices<CR>
 nnoremap <leader>fr :CocCommand flutter.run <CR>
-nnoremap <leader>fR :CocCommand flutter.lsp.restart <CR>
-nnoremap <leader>fo :left new output:///flutter-dev <CR>
+" nnoremap <leader>fR :CocCommand flutter.lsp.restart <CR>
+nnoremap <leader>fo :new output:///flutter-dev <CR>
 nnoremap <leader>o :CocCommand workspace.showOutput <CR>
+nnoremap <leader>fpg :CocCommand flutter.pub.get <CR>
+			
+" run on my phone
+nnoremap <leader>frs :CocCommand flutter.run -d 29cac59d39047ece <CR>
+" run on my pixel 3 emulator
+nnoremap <leader>frp :CocCommand flutter.run -d 192.168.56.102:5555 <CR>
+
+
+nnoremap <leader>ff :CocCommand flutter.dev.hotRestart <CR>
+nnoremap <leader>fhr :CocCommand flutter.dev.hotReload <CR>
+nnoremap <leader>fq :CocCommand flutter.dev.quit <CR>
+nnoremap <leader>fb :CocCommand flutter.dev.debugProfileWidgetBuilds <CR>
+nnoremap <leader>fs :CocCommand flutter.dev.screenshot <CR>
+nnoremap <leader>ff :CocCommand flutter.dev.hotRestart <CR>
+
 
 
