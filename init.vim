@@ -39,7 +39,7 @@ Plug 'https://github.com/iamcco/coc-flutter'
 Plug 'https://github.com/dart-lang/dart-vim-plugin'
 Plug 'https://github.com/mefercs/flutter-snippets-for-neovim'
 Plug 'https://github.com/ap/vim-css-color'
-Plug 'dart-lang/dart-vim-plugin'
+" Plug 'dart-lang/dart-vim-plugin'
 Plug 'hoob3rt/lualine.nvim'
 
 
@@ -225,6 +225,7 @@ nmap <leader>a  <Plug>(coc-codeaction-selected)
 nnoremap <leader>fe :CocCommand flutter.emulators <CR>
 nnoremap <leader>fd :CocCommand flutter.devices<CR>
 nnoremap <leader>fr :CocCommand flutter.run <CR>
+nnoremap <leader>fu :CocCommand flutter.upgrade <CR>
 " nnoremap <leader>fR :CocCommand flutter.lsp.restart <CR>
 nnoremap <leader>fo :new output:///flutter-dev <CR>
 nnoremap <leader>o :CocCommand workspace.showOutput <CR>
@@ -237,11 +238,15 @@ nnoremap <leader>frp :CocCommand flutter.run -d 192.168.56.102:5555 <CR>
 
 
 nnoremap <leader>ff :CocCommand flutter.dev.hotRestart <CR>
-nnoremap <leader>fhr :CocCommand flutter.dev.hotReload <CR>
+nnoremap <leader>fh :CocCommand flutter.dev.hotReload <CR>
 nnoremap <leader>fq :CocCommand flutter.dev.quit <CR>
 nnoremap <leader>fb :CocCommand flutter.dev.debugProfileWidgetBuilds <CR>
 nnoremap <leader>fs :CocCommand flutter.dev.screenshot <CR>
 nnoremap <leader>ff :CocCommand flutter.dev.hotRestart <CR>
 
 
+
+
+nnoremap <leader>pi :PlugInstall <CR>
+nnoremap <leader>pc :PlugClean <CR>
 
