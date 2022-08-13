@@ -231,10 +231,14 @@ nnoremap <leader>fo :new output:///flutter-dev <CR>
 nnoremap <leader>o :CocCommand workspace.showOutput <CR>
 nnoremap <leader>fpg :CocCommand flutter.pub.get <CR>
 			
-" run on my phone
+" run on my samsung galaxy S9 phone
 nnoremap <leader>frs :CocCommand flutter.run -d 29cac59d39047ece <CR>
+" run on my xiaomi mi 10 lite phone
+nnoremap <leader>frx :CocCommand flutter.run -d f2c83f66 <CR>
 " run on my pixel 3 emulator
 nnoremap <leader>frp :CocCommand flutter.run -d 192.168.56.102:5555 <CR>
+" run on my pixel 3a emulator
+nnoremap <leader>fra :CocCommand flutter.run -d 192.168.56.103:5555 <CR>
 
 
 nnoremap <leader>ff :CocCommand flutter.dev.hotRestart <CR>
