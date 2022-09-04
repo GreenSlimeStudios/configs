@@ -41,7 +41,9 @@ Plug 'https://github.com/mefercs/flutter-snippets-for-neovim'
 Plug 'https://github.com/ap/vim-css-color'
 " Plug 'dart-lang/dart-vim-plugin'
 Plug 'hoob3rt/lualine.nvim'
-
+Plug 'OmniSharp/omnisharp-vim'
+Plug 'fatih/vim-go'
+Plug 'xiyaowong/nvim-transparent'
 
 set encoding=UTF-8
 
@@ -56,9 +58,15 @@ nmap <F8> :TagbarToggle<CR>
 nnoremap <C-c> :DartFmt<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>g :Ag<CR>
-nnoremap <Leader>f :Files<CR>
+nnoremap <Leader>ff :Files<CR>
+nnoremap <Leader>gg :GitFiles<CR>
+nnoremap <Leader>hh :History<CR>
+nnoremap <Leader>t :TransparentToggle<CR>
 
 :colorscheme molokai
+" :TransparentEnable
+
+autocmd VimEnter * TransparentEnable
 
 " display colors
 " :HexokinaseTurnOn
@@ -87,10 +95,15 @@ let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
 let g:rustfmt_fail_silently = 0
 
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+inoremap <silent><expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+
+inoremap <silent><expr> <C-e> coc#pum#visible() ? coc#pum#cancel() : "\<C-e>"
+inoremap <silent><expr> <A-q> coc#pum#visible() ? coc#pum#confirm() : "\<A-q>"
+
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
@@ -222,6 +235,8 @@ let g:dartfmt_options = ['--fix', '--line-length 100']
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 
+
+" flutter related stuff
 nnoremap <leader>fe :CocCommand flutter.emulators <CR>
 nnoremap <leader>fd :CocCommand flutter.devices<CR>
 nnoremap <leader>fr :CocCommand flutter.run <CR>
@@ -240,16 +255,16 @@ nnoremap <leader>frp :CocCommand flutter.run -d 192.168.56.102:5555 <CR>
 " run on my pixel 3a emulator
 nnoremap <leader>fra :CocCommand flutter.run -d 192.168.56.103:5555 <CR>
 
-
-nnoremap <leader>ff :CocCommand flutter.dev.hotRestart <CR>
 nnoremap <leader>fh :CocCommand flutter.dev.hotReload <CR>
 nnoremap <leader>fq :CocCommand flutter.dev.quit <CR>
 nnoremap <leader>fb :CocCommand flutter.dev.debugProfileWidgetBuilds <CR>
 nnoremap <leader>fs :CocCommand flutter.dev.screenshot <CR>
-nnoremap <leader>ff :CocCommand flutter.dev.hotRestart <CR>
+nnoremap <leader>f :CocCommand flutter.dev.hotRestart <CR>
 
 
-
+" go related stuff
+nnoremap <leader>gr :GoRun <CR>
+nnoremap <leader>gt :GoTest <CR>
 
 nnoremap <leader>pi :PlugInstall <CR>
 nnoremap <leader>pc :PlugClean <CR>
