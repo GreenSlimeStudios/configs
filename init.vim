@@ -9,11 +9,13 @@
 
 call plug#begin("~/.config/nvim/plugged")
 Plug 'windwp/nvim-autopairs'
-" Plug 'https://github.com/junegunn/fzf.vim'
+Plug 'folke/tokyonight.nvim'
+Plug 'https://github.com/junegunn/fzf.vim'
+
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'natebosch/dartlang-snippets'
-" Plug 'https://github.com/nvim-treesitter/nvim-treesitter'
+" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'https://github.com/terryma/vim-multiple-cursors' " CTRL + N for multiple cursors
 Plug 'https://github.com/tpope/vim-commentary' " For Commenting gcc & gc
 Plug 'https://github.com/vim-airline/vim-airline' " Status bar
@@ -42,8 +44,16 @@ Plug 'https://github.com/ap/vim-css-color'
 " Plug 'dart-lang/dart-vim-plugin'
 Plug 'hoob3rt/lualine.nvim'
 Plug 'OmniSharp/omnisharp-vim'
-Plug 'fatih/vim-go'
+" Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'xiyaowong/nvim-transparent'
+Plug 'pangloss/vim-javascript'
+
+" Plug 'ternjs/tern_for_vim', { 'do': 'npm install && npm install -g tern' }
+" these two plugins will add highlighting and indenting to JSX and TSX files.
+Plug 'yuezk/vim-js'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'maxmellon/vim-jsx-pretty'
 
 set encoding=UTF-8
 
@@ -57,16 +67,18 @@ nnoremap <C-t> :NERDTreeToggle<CR>
 nmap <F8> :TagbarToggle<CR>
 nnoremap <C-c> :DartFmt<CR>
 nnoremap <Leader>b :Buffers<CR>
-nnoremap <Leader>g :Ag<CR>
+nnoremap <Leader>gg :Ag<CR>
 nnoremap <Leader>ff :Files<CR>
-nnoremap <Leader>gg :GitFiles<CR>
+nnoremap <Leader>gf :GitFiles<CR>
 nnoremap <Leader>hh :History<CR>
 nnoremap <Leader>t :TransparentToggle<CR>
 
 :colorscheme molokai
+
+
 " :TransparentEnable
 
-autocmd VimEnter * TransparentEnable
+" autocmd VimEnter * TransparentEnable
 
 " display colors
 " :HexokinaseTurnOn
@@ -96,15 +108,18 @@ let g:rustfmt_emit_files = 1
 let g:rustfmt_fail_silently = 0
 
 inoremap <silent><expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <silent><expr> <Down> coc#pum#visible() ? coc#pum#next(1) : "\<Down>"
+inoremap <silent><expr> <Up> coc#pum#visible() ? coc#pum#prev(1) : "\<Up>"
 
-inoremap <silent><expr> <C-e> coc#pum#visible() ? coc#pum#cancel() : "\<C-e>"
+" inoremap <silent><expr> <C-e> coc#pum#visible() ? coc#pum#cancel() : "\<C-e>"
 inoremap <silent><expr> <A-q> coc#pum#visible() ? coc#pum#confirm() : "\<A-q>"
 
 " inoremap <silent><expr> <TAB>
 "       \ pumvisible() ? "\<C-n>" :
 "       \ <SID>check_back_space() ? "\<TAB>" :
 "       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -269,3 +284,12 @@ nnoremap <leader>gt :GoTest <CR>
 nnoremap <leader>pi :PlugInstall <CR>
 nnoremap <leader>pc :PlugClean <CR>
 
+" use alt+hjkl to move between split/vsplit panels
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
