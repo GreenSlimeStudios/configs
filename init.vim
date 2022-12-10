@@ -25,6 +25,7 @@ Plug 'https://github.com/rafi/awesome-vim-colorschemes' " Retro Scheme
 Plug 'https://github.com/ryanoasis/vim-devicons' " Developer Icons
 Plug 'https://github.com/preservim/tagbar' " Tagbar for code navigation
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'rust-lang/rust.vim'
 Plug 'dense-analysis/ale'
@@ -61,6 +62,8 @@ call plug#end()
 
 let mapleader = ","
 
+autocmd VimEnter * TSEnable highlight
+
 nnoremap <C-f> :NERDTreeFocus<CR>
 " nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
@@ -74,6 +77,8 @@ nnoremap <Leader>hh :History<CR>
 nnoremap <Leader>t :TransparentToggle<CR>
 
 :colorscheme molokai
+" :colorscheme afterglow
+" :colorscheme deepspace
 
 
 " :TransparentEnable
