@@ -1,5 +1,6 @@
 -- If LuaRocks is installed, make sure that packages installed through it are
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
+-- require("theme/theme.lua")
 pcall(require, "luarocks.loader")
 
 -- Standard awesome library
@@ -21,6 +22,7 @@ require("awful.hotkeys_popup.keys")
 -- Load Debian menu entries
 local debian = require("debian.menu")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
+
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -49,10 +51,10 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init(gears.filesystem.get_themes_dir() .."zenburn/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "xfce4-terminal"
+terminal = "kitty"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -65,8 +67,8 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.floating,
     awful.layout.suit.tile,
+    awful.layout.suit.floating,
     awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.tile.top,
@@ -121,11 +123,14 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
+-- mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
+
+
+
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -183,6 +188,19 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
+
+-- local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+local volume_widget = require('awesome-wm-widgets.pactl-widget.volume')
+local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
+local fs_widget = require("awesome-wm-widgets.fs-widget.fs-widget")
+local github_contributions_widget = require("awesome-wm-widgets.github-contributions-widget.github-contributions-widget")
+local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
+local net_speed_widget = require("awesome-wm-widgets.net-speed-widget.net-speed")
+-- local brightness_widget = require("awesome-wm-widgets.brightness-widget.brightness")
+-- local github_activity_widget = require("awesome-wm-widgets.github-activity-widget.github-activity-widget")
+
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
@@ -213,6 +231,9 @@ awful.screen.connect_for_each_screen(function(s)
         filter  = awful.widget.tasklist.filter.currenttags,
         buttons = tasklist_buttons
     }
+    -- s.mysus = awful.widget.calendar{
+    -- screen = s
+    -- }
 
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s })
@@ -225,17 +246,36 @@ awful.screen.connect_for_each_screen(function(s)
             mylauncher,
             s.mytaglist,
             s.mypromptbox,
+
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            -- github_activity_widget{
+            --     username = 'greenslimestudios',
+            -- },
+            -- github_contributions_widget({username = 'greenslimestudios'}),
+            volume_widget(),
+            -- brightness_widget(),
+            cpu_widget(),
+            ram_widget(),
+            -- net_speed_widget(),
+            fs_widget();
             mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
+            battery_widget(),
+            logout_menu_widget(),
             s.mylayoutbox,
+            -- s.mysus,
         },
     }
+    -- beautiful.wibar_height=10
+    
 end)
+
+
+
 -- }}}
 
 -- {{{ Mouse bindings
@@ -246,6 +286,29 @@ root.buttons(gears.table.join(
 ))
 -- }}}
 
+function os.capture(cmd, raw)
+    local handle = assert(io.popen(cmd, 'r'))
+    local output = assert(handle:read('*a'))
+    
+    handle:close()
+    
+    if raw then 
+        return output 
+    end
+   
+    output = string.gsub(
+        string.gsub(
+            string.gsub(output, '^%s+', ''), 
+            '%s+$', 
+            ''
+        ), 
+        '[\n\r]+',
+        ' '
+    )
+   
+   return output
+
+end
 -- {{{ Key bindings
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
@@ -271,6 +334,18 @@ globalkeys = gears.table.join(
     ),
     awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
               {description = "show main menu", group = "awesome"}),
+    
+    awful.key({ modkey, }, "Up", function () 
+        --return an int
+        local cur_perc = tonumber(os.capture("pamixer --get-volume"))
+        local new_perc = cur_perc + 10
+        local command = "pamixer --set-volume" .. tostring(new_perc)
+        -- local command = "pamixer --set-volume 80"
+        awful.util.spawn(command) end,
+              {description = "increase volume", group = "awesome"}),
+
+    awful.key({ modkey, }, "Down", function () awful.util.spawn("pamixer -d 10") end,
+              {description = "decrease volume", group = "awesome"}),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
@@ -335,6 +410,7 @@ globalkeys = gears.table.join(
               {description = "run dmenu", group = "launcher"}),
 
     awful.key({ }, "Print", function () awful.util.spawn("scrot -s /home/max/Pictures/Screenshots/%b%d::%H%M%S.png") end),
+    awful.key({ modkey }, "Print", function () awful.util.spawn("scrot /home/max/Pictures/Screenshots/%b%d::%H%M%S.png") end),
 
     awful.key({ modkey }, "x",
               function ()
@@ -586,3 +662,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 
 awful.spawn.with_shell("compton")
+os.execute("xrandr --output HDMI-1 --right-of DP-1")
+os.execute("xrandr --output eDP-1 --left-of DP-1")
+
+
